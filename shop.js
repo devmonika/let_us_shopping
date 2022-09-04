@@ -80,6 +80,7 @@ const showShopData = shopDatas => {
 
 // product id 
 const productPOpUp = async(id) =>{
+    document.getElementById('show-details').textContent = ''
     const url =`https://fakestoreapi.com/products/${id}`;
     const res = await fetch(url);
     const data = await res.json();
@@ -87,21 +88,29 @@ const productPOpUp = async(id) =>{
     showProductDetails(data);
 }
 
-// show modal details 
-const showProductDetails = (shopData) =>{
-    console.log(shopData);
-    const showDetailsOfProduct = document.getElementById('show-details');
-    showDetailsOfProduct.textContent='';
-    showDetailsOfProduct.innerHTML=`
+
+const showProductDetails = (shopData) => {
+	console.log(shopData);
+	const showDetailsOfProduct = document.getElementById('show-details');
+    
+	const modalBox = document.createElement('div')
+	modalBox.innerHTML = `
     <div class="modal-box">
-        <img src="${shopData.image ? shopData.image : 'no img found'}" class="h-60 mx-auto"/>
-        <h3 class="font-bold text-lg">${shopData.title ? shopData.title : 'no data dound'}</h3>
-        <p class="py-4">${shopData.description ? shopData.description : 'no data found'}</p>
+        <img src="${
+			shopData.image ? shopData.image : 'no img found'
+		}" class="h-5/6"/>
+        <h3 class="font-bold text-lg">${
+			shopData.title ? shopData.title : 'no data dound'
+		}</h3>
+        <p class="py-4">${
+			shopData.description ? shopData.description : 'no data found'
+		}</p>
         <div class="modal-action">
         <label for="my-modal-6" class="btn">Close</label>
         </div>
     </div>
     `;
+	showDetailsOfProduct.appendChild(modalBox)
 };
 
 getCatUrl();
