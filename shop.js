@@ -16,26 +16,29 @@ const getCatUrl = async () => {
     // console.log(category);
       const li = document.createElement('li');
       li.innerHTML = `
-          <span onclick="loadAllNews('${category_id}')" class="text-2xl capitalize">${category}</span>
-          `;
+      <span onclick="loadAllCat('${category.split(
+        "'"
+    )}')" class="text-2xl capitalize">${category}</span>
+  `;
     catContainer.appendChild(li);
   
     });
   
   }
-  //getcat id
-//   const getCatId = async (category_id) => {
-//     const url = `https://fakestoreapi.com/products/categories/${category_id}`;
-//     const res = await fetch(url);
-//     const data = await res.json();
-//     displayProCat(data);
-//     console.log(data);
-//   }
+
+// getcat id
+const loadAllCat = async (category) => {
+    const categoryWithQuote = category.replace(/,/g, "'");
+      const categoryArray = categoryWithQuote.split(' ').join('%20')
+      const url = `https://fakestoreapi.com/products/category/${categoryArray}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      showShopData(data);
+  };
 
 
 
-
-
+//   loadAllCat();
 
 
 // get all product 
@@ -52,6 +55,7 @@ const getShopApi = async() =>{
 
 const showShopData = shopDatas => {
     const ShopItem = document.getElementById('show-item');
+    ShopItem.textContent='';
     shopDatas = shopDatas.slice(0,9);
     shopDatas.forEach(shopData  => {
     // console.log(shopData);
@@ -90,7 +94,7 @@ const showProductDetails = (shopData) =>{
     showDetailsOfProduct.textContent='';
     showDetailsOfProduct.innerHTML=`
     <div class="modal-box">
-        <img src="${shopData.image ? shopData.image : 'no img found'}" class="h-5/6"/>
+        <img src="${shopData.image ? shopData.image : 'no img found'}" class="h-60 mx-auto"/>
         <h3 class="font-bold text-lg">${shopData.title ? shopData.title : 'no data dound'}</h3>
         <p class="py-4">${shopData.description ? shopData.description : 'no data found'}</p>
         <div class="modal-action">
